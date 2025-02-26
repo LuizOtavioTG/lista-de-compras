@@ -24,5 +24,20 @@ nomeItem.innerText = inputItem.value;
 containerItemDaLista.appendChild(inputCheckbox);
 containerItemDaLista.appendChild(nomeItem);
 itemDaLista.appendChild(containerItemDaLista);
+
+const diaDaSemana = new Date().toLocaleDateString("pt-BR", {
+    weekday: "long"
+});
+const data = new Date().toLocaleDateString("pt-BR");
+const hora = new Date().toLocaleTimeString("pt-BR", {
+    hour: "numeric",
+    minute: "numeric"
+});
+const dataCompleta = `${diaDaSemana} (${data}) às ${hora}`;
+const itemData = document.createElement("p");
+itemData.innerText = dataCompleta;
+itemData.classList.add("texto-data");
+itemDaLista.appendChild(itemData);
+
 listaDeCompras.appendChild(itemDaLista);
 })
