@@ -1,24 +1,26 @@
 import { criarItemDaLista } from "./scripts/criarItemDaLista.js";
+import { salvarListaNoLocalStorage, carregarListaDoLocalStorage } from "./scripts/localStorage.js"
+import verificarListaVazia from "./scripts/verificarListaVazia.js";
 
 const listaDeCompras = document.getElementById("lista-de-compras");
 const botaoAdicionar = document.getElementById("adicionar-item");
+const inputItem = document.getElementById("input-item");
+
 
 botaoAdicionar.addEventListener("click", (evento) => {
     evento.preventDefault();
-    const itemDaLista = criarItemDaLista();
-    listaDeCompras.appendChild(itemDaLista);
-    verificarListaVazia();
+    const itemDaLista = criarItemDaLista(inputItem);
+    if (itemDaLista) {
+        listaDeCompras.appendChild(itemDaLista);
+        salvarListaNoLocalStorage();  
+    }
+    verificarListaVazia(listaDeCompras);
 })
 
-const mensagemListaVazia = document.querySelector(".mensagem-lista-vazia");
+// Carregar a lista do localStorage quando a página carregar
+document.addEventListener("DOMContentLoaded", () => {
+    carregarListaDoLocalStorage();
+    verificarListaVazia(listaDeCompras);
+});
 
-function verificarListaVazia() {
-    const itensDaLista = listaDeCompras.querySelectorAll("li");
-    if (itensDaLista.length === 0) {
-        mensagemListaVazia.style.display = "block";
-    } else {
-        mensagemListaVazia.style.display = "none";
-    }
-}
-
-verificarListaVazia();
+verificarListaVazia(listaDeCompras);
